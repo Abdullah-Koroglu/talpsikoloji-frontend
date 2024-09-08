@@ -6,9 +6,9 @@
  */
 const themeConfig = {
   // ** Layout Configs
-  templateName: 'Materio' /* App Name */,
+  templateName: 'Tal Psikoloji' /* App Name */,
   layout: 'vertical' /* vertical | horizontal */,
-  mode: 'light' /* light | dark | semi-dark /*! Note: semi-dark value will only work for Vertical Layout */,
+  mode: 'semi-dark' /* light | dark | semi-dark /*! Note: semi-dark value will only work for Vertical Layout */,
   direction: 'ltr' /* ltr | rtl */,
   skin: 'default' /* default | bordered */,
   contentWidth: 'boxed' /* full | boxed */,
@@ -21,7 +21,7 @@ const themeConfig = {
   navSubItemIcon: 'mdi:circle-outline' /* Icon */,
   verticalNavToggleType: 'accordion' /* accordion | collapse /*! Note: This is for Vertical navigation menu only */,
   navCollapsed: false /* true | false /*! Note: This is for Vertical navigation menu only */,
-  navigationSize: 260 /* Number in px(Pixels) /*! Note: This is for Vertical navigation menu only */,
+  navigationSize: 300 /* Number in px(Pixels) /*! Note: This is for Vertical navigation menu only */,
   collapsedNavigationSize: 68 /* Number in px(Pixels) /*! Note: This is for Vertical navigation menu only */,
   afterVerticalNavMenuContentPosition: 'fixed' /* fixed | static */,
   beforeVerticalNavMenuContentPosition: 'fixed' /* fixed | static */,

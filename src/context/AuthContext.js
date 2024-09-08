@@ -31,37 +31,6 @@ const AuthProvider = ({ children }) => {
   const interceptorId = useRef(null)
 
   useEffect(() => {
-    const initAuth = async () => {
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-
-      if (storedToken) {
-        setLoading(true)
-        await axios
-          .get(authConfig.meEndpoint, {
-            headers: {
-              Authorization: `Bearer ${storedToken}`
-            }
-          })
-          .then(async response => {
-            setLoading(false)
-            setUser({ ...response.data.user, role: response.data.user?.role?.name })
-          })
-          .catch((err) => {
-            console.log(err);
-            localStorage.removeItem('userData')
-            localStorage.removeItem('accessToken')
-            setUser(null)
-            setLoading(false)
-            if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
-              router.replace('/login')
-            }
-          })
-      } else {
-        setLoading(false)
-      }
-    }
-    initAuth()
-
     // ** Setup Axios Interceptors for adding JWT to headers
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     if (storedToken) {
@@ -78,6 +47,36 @@ const AuthProvider = ({ children }) => {
       )
     }
 
+    const initAuth = async () => {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
+      if (storedToken) {
+        setLoading(true)
+        await axios
+          .get(authConfig.meEndpoint, {
+            headers: {
+              Authorization: `Bearer ${storedToken}`
+            }
+          })
+          .then(async response => {
+            response.data && setUser({ ...response.data, role: response.data?.role?.name, jwt: storedToken })
+            response.data && setLoading(false)
+          })
+          .catch((err) => {
+            console.log(err);
+            localStorage.removeItem('userData')
+            localStorage.removeItem('accessToken')
+            setUser(null)
+            setLoading(false)
+            if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
+              router.replace('/login')
+            }
+          })
+      } else {
+        setLoading(false)
+      }
+    }
+    initAuth()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -91,6 +90,7 @@ const AuthProvider = ({ children }) => {
 
         params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.user)) : null
 
+        const jwt = response.data.jwt
         await axios
           .get(authConfig.meEndpoint, {
             headers: {
@@ -99,7 +99,7 @@ const AuthProvider = ({ children }) => {
           })
           .then(async response => {
             setLoading(false)
-            setUser({ ...response.data, role: response.data.role.name })
+            setUser({ ...response.data, role: response.data.role.name, jwt })
             router.replace('/')
           })
           .catch((err) => {
@@ -145,6 +145,8 @@ const AuthProvider = ({ children }) => {
           ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.jwt)
           : null
 
+        params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.user)) : null
+
         await axios
           .get(authConfig.meEndpoint, {
             headers: {
@@ -152,13 +154,12 @@ const AuthProvider = ({ children }) => {
             }
           })
           .then(async response => {
-            console.log(response.data);
-
             setLoading(false)
-            setUser({ ...response.data.user, role: response.data.user.role.name })
+            setUser({ ...response.data, role: response.data.role.name, jwt: response.data.jwt })
             router.replace('/')
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err);
             localStorage.removeItem('userData')
             localStorage.removeItem('accessToken')
             setUser(null)

@@ -93,15 +93,25 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 }))
 
 const defaultValues = {
-  email: 'test@test.com',
-  username: 'test1',
+  email: 'abdullah@test.com',
   password: 'test123',
+  parentFullName: 'Test Koroglu',
+  parentPhone: '05511086483',
+  parentTcNo: '55555555555',
+  childFullName: 'Abdullah Koroglu',
+  birthDate: '20/10/2010',
+  childTcNo: '555555555',
 }
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
-  username: yup.string().min(5).required(),
-  password: yup.string().min(5).required()
+  password: yup.string().min(5).required(),
+  parentFullName: yup.string().required(),
+  parentPhone: yup.string().required(),
+  parentTcNo: yup.string().required(),
+  childFullName: yup.string().required(),
+  birthDate: yup.string().required(),
+  childTcNo: yup.string().required(),
 })
 
 
@@ -135,9 +145,20 @@ const Register = () => {
   })
 
   const onSubmit = data => {
-    const { email, password, username } = data
-    auth.register({ email, username, password, rememberMe }, (err) => {
-      setError('username', {
+    const { email, password, parentFullName } = data
+    auth.register({
+      email,
+      username: email,
+      password,
+      rememberMe: true,
+      parentFullName: data.parentFullName,
+      parentPhone: data.parentPhone,
+      parentTcNo: data.parentTcNo,
+      childFullName: data.childFullName,
+      birthDate: data.birthDate,
+      childTcNo: data.childTcNo,
+    }, (err) => {
+      setError('email', {
         type: 'manual',
         message: err.message ?? 'Something went wrong'
       })
@@ -192,48 +213,185 @@ const Register = () => {
                 {themeConfig.templateName}
               </Typography>
             </Box>
-            <Box sx={{ mb: 6 }}>
+            {/* <Box sx={{ mb: 6 }}>
               <TypographyStyled variant='h5'>Adventure starts here 🚀</TypographyStyled>
               <Typography variant='body2'>Make your app management easy and fun!</Typography>
-            </Box>
+            </Box> */}
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
-                  name='username'
+                  name="childFullName"
                   control={control}
-                  rules={{ required: true }}
+                  rules={{ required: 'Adı Soyadı zorunludur' }}
                   render={({ field: { value, onChange, onBlur } }) => (
                     <TextField
-                      label='Username'
+                      label="Çocuk Adı Soyadı"
                       value={value}
                       onBlur={onBlur}
                       onChange={onChange}
-                      error={Boolean(errors.username)}
-                      placeholder='John Doe'
+                      error={Boolean(errors.childFullName)}
+                      placeholder="Çocuk Adı Soyadı"
                     />
                   )}
                 />
-                {errors.username && <FormHelperText sx={{ color: 'error.main' }}>{errors.username.message}</FormHelperText>}
+                {errors.childFullName && (
+                  <FormHelperText sx={{ color: 'error.main' }}>
+                    {errors.childFullName.message}
+                  </FormHelperText>
+                )}
               </FormControl>
+
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
-                  name='email'
+                  name="birthDate"
                   control={control}
-                  rules={{ required: true }}
+                  rules={{ required: 'Doğum Tarihi zorunludur' }}
                   render={({ field: { value, onChange, onBlur } }) => (
                     <TextField
-                      autoFocus
-                      label='Email'
+                      label="Doğum Tarihi (gün/ay/yıl)"
+                      type="date"
                       value={value}
                       onBlur={onBlur}
                       onChange={onChange}
-                      error={Boolean(errors.email)}
-                      placeholder='admin@materio.com'
+                      error={Boolean(errors.birthDate)}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      placeholder="Doğum Tarihi"
                     />
                   )}
                 />
-                {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
+                {errors.birthDate && (
+                  <FormHelperText sx={{ color: 'error.main' }}>
+                    {errors.birthDate.message}
+                  </FormHelperText>
+                )}
               </FormControl>
+
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <Controller
+                  name="childTcNo"
+                  control={control}
+                  rules={{ required: 'TC Kimlik Numarası zorunludur' }}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <TextField
+                      label="Çocuk TC Kimlik Numarası"
+                      value={value}
+                      onBlur={onBlur}
+                      onChange={onChange}
+                      error={Boolean(errors.childTcNo)}
+                      placeholder="Çocuk TC Kimlik Numarası"
+                    />
+                  )}
+                />
+                {errors.childTcNo && (
+                  <FormHelperText sx={{ color: 'error.main' }}>
+                    {errors.childTcNo.message}
+                  </FormHelperText>
+                )}
+              </FormControl>
+
+              {/* Veli Bilgileri */}
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <Controller
+                  name="parentFullName"
+                  control={control}
+                  rules={{ required: 'Adı Soyadı zorunludur' }}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <TextField
+                      label="Veli Adı Soyadı"
+                      value={value}
+                      onBlur={onBlur}
+                      onChange={onChange}
+                      error={Boolean(errors.parentFullName)}
+                      placeholder="Veli Adı Soyadı"
+                    />
+                  )}
+                />
+                {errors.parentFullName && (
+                  <FormHelperText sx={{ color: 'error.main' }}>
+                    {errors.parentFullName.message}
+                  </FormHelperText>
+                )}
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <Controller
+                  name="parentPhone"
+                  control={control}
+                  rules={{ required: 'Telefon Numarası zorunludur' }}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <TextField
+                      label="Telefon Numarası"
+                      value={value}
+                      onBlur={onBlur}
+                      onChange={onChange}
+                      error={Boolean(errors.parentPhone)}
+                      placeholder="Telefon Numarası"
+                    />
+                  )}
+                />
+                {errors.parentPhone && (
+                  <FormHelperText sx={{ color: 'error.main' }}>
+                    {errors.parentPhone.message}
+                  </FormHelperText>
+                )}
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: 'E-posta Adresi zorunludur',
+                    pattern: {
+                      value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
+                      message: 'Geçerli bir e-posta adresi giriniz',
+                    },
+                  }}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <TextField
+                      label="E-posta Adresi"
+                      value={value}
+                      onBlur={onBlur}
+                      onChange={onChange}
+                      error={Boolean(errors.parentEmail)}
+                      placeholder="E-posta Adresi"
+                    />
+                  )}
+                />
+                {errors.parentEmail && (
+                  <FormHelperText sx={{ color: 'error.main' }}>
+                    {errors.parentEmail.message}
+                  </FormHelperText>
+                )}
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <Controller
+                  name="parentTcNo"
+                  control={control}
+                  rules={{ required: 'TC Kimlik Numarası zorunludur' }}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <TextField
+                      label="Veli TC Kimlik Numarası"
+                      value={value}
+                      onBlur={onBlur}
+                      onChange={onChange}
+                      error={Boolean(errors.parentTcNo)}
+                      placeholder="Veli TC Kimlik Numarası"
+                    />
+                  )}
+                />
+                {errors.parentTcNo && (
+                  <FormHelperText sx={{ color: 'error.main' }}>
+                    {errors.parentTcNo.message}
+                  </FormHelperText>
+                )}
+              </FormControl>
+
+
+
               <FormControl fullWidth>
                 <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
                   Password
@@ -246,7 +404,7 @@ const Register = () => {
                     <OutlinedInput
                       value={value}
                       onBlur={onBlur}
-                      label='Password'
+                      label='Şifre'
                       onChange={onChange}
                       id='auth-login-v2-password'
                       error={Boolean(errors.password)}

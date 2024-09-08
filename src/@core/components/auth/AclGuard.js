@@ -58,21 +58,15 @@ const AclGuard = props => {
   }
 
   // Check the access of current user and render pages
-  if (ability && auth.user) {
-    console.log('Checking permissions for action:', aclAbilities.action, 'on subject:', aclAbilities.subject)
-    console.log('Checking permissions for action:', ability.can(aclAbilities.action, aclAbilities.subject))
-
-    if (ability.can(aclAbilities.action, aclAbilities.subject)) {
-      console.log('User has permission:', aclAbilities.action, aclAbilities.subject)
-      if (router.route === '/') {
-        return <Spinner />
-      }
-
-      return <AbilityContext.Provider value={ability}>{children}</AbilityContext.Provider>
-
-    } else {
-      console.log('User does not have permission:', aclAbilities.action, aclAbilities.subject)
+  if (ability && auth.user && ability.can(aclAbilities.action, aclAbilities.subject)) {
+    if (router.route === '/') {
+      return <Spinner />
     }
+
+    return <AbilityContext.Provider value={ability}>{children}</AbilityContext.Provider>
+
+  } else {
+    console.log('User does not have permission:', aclAbilities.action, aclAbilities.subject)
   }
 
   // Render Not Authorized component if the current user has limited access
