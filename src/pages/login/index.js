@@ -101,8 +101,8 @@ const schema = yup.object().shape({
 })
 
 const defaultValues = {
-  password: 'test123',
-  email: 'abdullah1@test.com'
+  password: '',
+  email: ''
 }
 
 const LoginPage = () => {
@@ -143,7 +143,7 @@ const LoginPage = () => {
 
   return (
     <Box className='content-right'>
-      {!hidden ? (
+      {/* {!hidden ? (
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
           <LoginIllustrationWrapper>
             <LoginIllustration
@@ -153,7 +153,7 @@ const LoginPage = () => {
           </LoginIllustrationWrapper>
           <FooterIllustrationsV2 />
         </Box>
-      ) : null}
+      ) : null} */}
       <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
         <Box
           sx={{

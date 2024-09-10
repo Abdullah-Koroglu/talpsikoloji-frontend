@@ -92,15 +92,25 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
+// const defaultValues = {
+//   email: 'abdullah@test.com',
+//   password: 'test123',
+//   parentFullName: 'Test Koroglu',
+//   parentPhone: '05511086483',
+//   parentTcNo: '55555555555',
+//   childFullName: 'Abdullah Koroglu',
+//   birthDate: '20/10/2010',
+//   childTcNo: '555555555',
+// }
 const defaultValues = {
-  email: 'abdullah@test.com',
-  password: 'test123',
-  parentFullName: 'Test Koroglu',
-  parentPhone: '05511086483',
-  parentTcNo: '55555555555',
-  childFullName: 'Abdullah Koroglu',
-  birthDate: '20/10/2010',
-  childTcNo: '555555555',
+  email: '',
+  password: '',
+  parentFullName: '',
+  parentPhone: '',
+  parentTcNo: '',
+  childFullName: '',
+  birthDate: '',
+  childTcNo: '',
 }
 
 const schema = yup.object().shape({
@@ -167,7 +177,7 @@ const Register = () => {
 
   return (
     <Box className='content-right'>
-      {!hidden ? (
+      {/* {!hidden ? (
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
           <RegisterIllustrationWrapper>
             <RegisterIllustration
@@ -177,7 +187,7 @@ const Register = () => {
           </RegisterIllustrationWrapper>
           <FooterIllustrationsV2 image={<TreeIllustration alt='tree' src='/images/pages/tree-2.png' />} />
         </Box>
-      ) : null}
+      ) : null} */}
       <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
         <Box
           sx={{
