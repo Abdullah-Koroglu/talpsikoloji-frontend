@@ -191,8 +191,8 @@ const LoginPage = () => {
               </Typography>
             </Box>
             <Box sx={{ mb: 6 }}>
-              <TypographyStyled variant='h5'>Welcome to {themeConfig.templateName}! 👋🏻</TypographyStyled>
-              <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
+              <TypographyStyled variant='h5'>{themeConfig.templateName}'ye Hoş Geldiniz 👋🏻</TypographyStyled>
+              <Typography variant='body2'>Lütfen giriş yapın.</Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
               <FormControl fullWidth sx={{ mb: 4 }}>
@@ -258,17 +258,17 @@ const LoginPage = () => {
                   label='Remember Me'
                   control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
                 />
-                <LinkStyled href='/forgot-password'>Forgot Password?</LinkStyled>
+                {/* <LinkStyled href='/forgot-password'>Forgot Password?</LinkStyled> */}
               </Box>
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                Login
+                Giriş Yap
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography variant='body2' sx={{ mr: 2 }}>
-                  New on our platform?
+                  Hesabınız yok mu?
                 </Typography>
                 <Typography variant='body2'>
-                  <LinkStyled href='/register'>Create an account</LinkStyled>
+                  <LinkStyled href='/register'>Kayıt Olun</LinkStyled>
                 </Typography>
               </Box>
             </form>

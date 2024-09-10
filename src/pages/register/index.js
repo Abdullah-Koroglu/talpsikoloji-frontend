@@ -404,7 +404,7 @@ const Register = () => {
 
               <FormControl fullWidth>
                 <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
-                  Password
+                  Şifre
                 </InputLabel>
                 <Controller
                   name='password'
@@ -440,7 +440,7 @@ const Register = () => {
                 )}
               </FormControl>
               <FormControlLabel
-                label='Remember Me'
+                label='Beni Hatırla'
                 control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
               />
               {/* <FormControlLabel
@@ -458,14 +458,14 @@ const Register = () => {
                 }
               /> */}
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                Sign up
+                Kayıt Ol
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography variant='body2' sx={{ mr: 2 }}>
-                  Already have an account?
+                  Zaten hesabınız var mı?
                 </Typography>
                 <Typography variant='body2'>
-                  <LinkStyled href='/login'>Sign in instead</LinkStyled>
+                  <LinkStyled href='/login'>Giriş yap</LinkStyled>
                 </Typography>
               </Box>
             </form>
