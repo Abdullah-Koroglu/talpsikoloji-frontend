@@ -74,7 +74,7 @@ const TrackPage = () => {
       <Typography variant="h2" gutterBottom>
         {`${user.childFullName} ${trackIndex + 1}. Dinletisi`}
       </Typography>
-      {track.attributes && <audio style={{ width: '100%' }} onEnded={postCompletion} src={`http://localhost:1337${track.attributes.track.data.attributes.url}`} controls controlsList="nodownload"></audio>}
+      {track.attributes && <audio style={{ width: '100%' }} onEnded={postCompletion} src={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}${track.attributes.track.data.attributes.url}`} controls controlsList="nodownload"></audio>}
     </Box>
   )
 }
