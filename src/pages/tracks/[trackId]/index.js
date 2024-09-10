@@ -19,24 +19,42 @@ import toast from 'react-hot-toast'
 
 const TrackPage = () => {
   const [track, setTrack] = useState([])
+  const [trackIndex, setTrackIndex] = useState(0)
+
   const auth = useAuth()
-  const { user } = auth
   const router = useRouter()
-  const { trackId } = router.query
+
+  const { trackId, orderId } = router.query
+  const { user } = auth
+
 
   const getTrack = async () => {
-    if (trackId) {
-      const response = await axios(`/tracks/${trackId}?populate=track`)
-      setTrack(response.data?.data)
+    if (orderId) {
+      const meResponse = await axios('/users/me?populate[tracks][populate]=track')
+      const myTracks = meResponse.data.tracks
+
+      const trackIndex = myTracks.findIndex(track => track.id === parseInt(orderId))
+      const thisTrack = myTracks[trackIndex]
+      setTrackIndex(trackIndex)
+
+      if (thisTrack.track.id === parseInt(trackId)) {
+        if (thisTrack.completed === false) {
+          const response = await axios(`/tracks/${trackId}?populate=track`)
+          setTrack(response.data?.data)
+        } else {
+          window.location.href = '/tracks'
+        }
+      } else {
+        window.location.href = '/tracks'
+      }
+    } else {
+      window.location.href = '/tracks'
     }
   }
 
   const postCompletion = () => {
-    user.id && axios.post(`/completions`, {
-      data: {
-        users_permissions_user: user.id,
-        track: track.id
-      }
+    user.id && axios.post(`/complete-track`, {
+      id: orderId,
     }).then(() => {
       toast.success('Dinleti Tamamlanmıştır');
     }).catch(() => {
@@ -48,11 +66,13 @@ const TrackPage = () => {
     getTrack()
   }, [trackId])
 
+
   return (
     <Box container spacing={16}>
-      <Button onClick={postCompletion}>post</Button>
+      <Button onClick={() => router.push('/tracks')}>Geri</Button>
+      {/* <Button onClick={postCompletion}>post</Button> */}
       <Typography variant="h2" gutterBottom>
-        {track.attributes && track.attributes.name.toUpperCase()}
+        {`${user.childFullName} ${trackIndex + 1}. Dinletisi`}
       </Typography>
       {track.attributes && <audio style={{ width: '100%' }} onEnded={postCompletion} src={`http://localhost:1337${track.attributes.track.data.attributes.url}`} controls controlsList="nodownload"></audio>}
     </Box>

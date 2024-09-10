@@ -14,6 +14,7 @@ import CardContent from '@mui/material/CardContent'
 
 import axios from 'axios'
 import ListItemSelected from 'src/components/tracksList'
+import { Box } from '@mui/material'
 
 
 const TracksPage = () => {
@@ -23,7 +24,7 @@ const TracksPage = () => {
   const { user } = auth
 
   const getTracks = async () => {
-    const response = await axios('/users/me?populate=tracks', {
+    const response = await axios('/users/me?populate[tracks][populate]=track', {
       headers: {
         Authorization: `Bearer ${user.jwt}`
       }
@@ -32,31 +33,34 @@ const TracksPage = () => {
     response.data && setTracks(response.data.tracks)
   }
 
-  const getCompletions = async () => {
-    const response = await axios(`/completions?filters[users_permissions_user][$eq]=${user.id}&populate=track`, {
-      headers: {
-        Authorization: `Bearer ${user.jwt}`
-      }
-    })
+  const findTodaysTrack = () => {
+    const today = new Date()
+    const day = today.getDate()
+    const month = today.getMonth()
+    const year = today.getFullYear()
 
-    response.data && setCompletions(response.data)
+    const todayDate = new Date(year, month, day)
+    const startDate = new Date(user.startedListeningAt)
+
+    const dayDifference = Math.floor((todayDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+    return tracks[dayDifference]
   }
 
   useEffect(() => {
     getTracks()
-    getCompletions()
   }, [])
 
   return (
-    <Grid container spacing={6}>
+    <Box container spacing={6}>
       <Typography variant="h2" gutterBottom>
         {user.childFullName}
 
         {
           (user && tracks?.length > 0) &&
-          <ListItemSelected titleName={user.childFullName} data={tracks} />}
+          <ListItemSelected titleName={user.childFullName} data={tracks} todaysTrack={findTodaysTrack()} />}
       </Typography>
-    </Grid>
+    </Box>
   )
 }
 TracksPage.acl = {
