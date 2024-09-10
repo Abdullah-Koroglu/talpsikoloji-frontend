@@ -34,19 +34,23 @@ const TracksPage = () => {
   }
 
   const findTodaysTrack = () => {
-    const today = new Date()
-    const day = today.getDate()
-    const month = today.getMonth()
-    const year = today.getFullYear()
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth();
+    const year = today.getFullYear();
 
-    const todayDate = new Date(year, month, day)
-    const startDate = new Date(user.startedListeningAt)
+    // If the current time is before 07:00, treat it as the previous day
+    const hour = today.getHours();
+    const adjustedDay = hour < 7 ? day - 1 : day;
 
-    const dayDifference = Math.floor((todayDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+    const todayDate = new Date(year, month, adjustedDay, 7); // Set 07:00 as the reference time
+    const startDate = new Date(user.startedListeningAt);
 
+    const dayDifference = Math.floor((todayDate - startDate) / (1000 * 60 * 60 * 24));
 
-    return dayDifference < 0 ? null : tracks[dayDifference]
-  }
+    return dayDifference < 0 ? null : tracks[dayDifference];
+  };
+
 
   useEffect(() => {
     getTracks()
