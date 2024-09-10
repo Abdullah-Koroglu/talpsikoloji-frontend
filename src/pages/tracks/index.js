@@ -44,7 +44,8 @@ const TracksPage = () => {
 
     const dayDifference = Math.floor((todayDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
 
-    return tracks[dayDifference]
+
+    return dayDifference < 0 ? null : tracks[dayDifference]
   }
 
   useEffect(() => {

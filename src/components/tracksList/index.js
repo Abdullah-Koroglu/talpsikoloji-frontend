@@ -16,19 +16,25 @@ const ListItemSelected = ({ data, titleName, todaysTrack }) => {
   // const [selectedIndex, setSelectedIndex] = useState(1)
 
   const handleListItemClick = (trackId, orderId, completed) => {
-    if (completed) {
-      if (orderId === todaysTrack.id) {
-        toast.success('Bugünün dinletisini tamamladınız.')
+    if (todaysTrack === null) {
+      toast.error('Dinletinizin vakti gelmemiştir.')
+
+      return
+    } else {
+      if (completed) {
+        if (orderId === todaysTrack?.id) {
+          toast.success('Bugünün dinletisini tamamladınız.')
+
+          return
+        }
+        toast.error('Dinleti tamamlanmıştır. Günün dinletisini dinleyebilirsiniz.')
+
+        return
+      } else if (orderId !== todaysTrack?.id) {
+        toast.error('Günün dinletisini dinlemeden diğer dinletilere geçemezsiniz.')
 
         return
       }
-      toast.error('Dinleti tamamlanmıştır. Günün dinletisini dinleyebilirsiniz.')
-
-      return
-    } else if (orderId !== todaysTrack.id) {
-      toast.error('Günün dinletisini dinlemeden diğer dinletilere geçemezsiniz.')
-
-      return
     }
     window.location.href = `/tracks/${trackId}?orderId=${orderId}`
   }
@@ -41,7 +47,7 @@ const ListItemSelected = ({ data, titleName, todaysTrack }) => {
             <ListItem
               key={index}
               disablePadding
-              disabled={item.id !== todaysTrack.id}
+              disabled={item.id !== todaysTrack?.id}
               selected={item.completed}
               secondaryAction={
                 <IconButton edge='end' onClick={e => e.stopPropagation()}>
@@ -56,7 +62,7 @@ const ListItemSelected = ({ data, titleName, todaysTrack }) => {
                 <ListItemText
 
                   // primary={item.name} 
-                  primary={`${titleName} ${index + 1}. Dinletisi ${item.id === todaysTrack.id ? '🎯' : ''}`}
+                  primary={`${titleName} ${index + 1}. Dinletisi ${item.id === todaysTrack?.id ? '🎯' : ''}`}
                 />
               </ListItemButton>
             </ListItem>
