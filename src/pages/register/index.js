@@ -177,17 +177,19 @@ const Register = () => {
 
   return (
     <Box className='content-right'>
-      {/* {!hidden ? (
+      {!hidden ? (
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
           <RegisterIllustrationWrapper>
             <RegisterIllustration
               alt='register-illustration'
-              src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
+
+              // src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
+              src={`/images/pages/auth-v2-register-illustration-bordered-light.png`}
             />
           </RegisterIllustrationWrapper>
           <FooterIllustrationsV2 image={<TreeIllustration alt='tree' src='/images/pages/tree-2.png' />} />
         </Box>
-      ) : null} */}
+      ) : null}
       <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
         <Box
           sx={{

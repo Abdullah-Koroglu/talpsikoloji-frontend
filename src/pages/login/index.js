@@ -143,17 +143,19 @@ const LoginPage = () => {
 
   return (
     <Box className='content-right'>
-      {/* {!hidden ? (
+      {!hidden ? (
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
           <LoginIllustrationWrapper>
             <LoginIllustration
               alt='login-illustration'
-              src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
+
+              // src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
+              src={`/images/pages/auth-v2-login-illustration-bordered-light.png`}
             />
           </LoginIllustrationWrapper>
           <FooterIllustrationsV2 />
         </Box>
-      ) : null} */}
+      ) : null}
       <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
         <Box
           sx={{

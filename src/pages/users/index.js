@@ -1,22 +1,69 @@
 // ** React Imports
-import { useContext } from 'react'
-
-// ** Context Imports
-import { AbilityContext } from 'src/layouts/components/acl/Can'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
+import { Box } from '@mui/material'
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import axios from 'axios'
 
 const UsersPage = () => {
+  const [data, setData] = useState([])
+
+  const getUsers = async () => {
+    const response = await axios('/users')
+    response.data && setData(response.data)
+  }
+
+
+  useEffect(() => {
+    getUsers()
+  }, [])
 
   return (
-    <Grid container spacing={6}>
-      Users
-    </Grid>
+    <Box container spacing={6}>
+      <Typography variant="h2" gutterBottom>
+        Kullanıcılar
+      </Typography>
+
+
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Çocuğun Adı</TableCell>
+              <TableCell align="left">Ebeveyn Adı</TableCell>
+              <TableCell align="right">Email</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((item) => (
+              <TableRow
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  window.location.href = `/users/${item.id}`
+                }}
+                key={item.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {item.childFullName}
+                </TableCell>
+                <TableCell align="left">{item.parentFullName}</TableCell>
+                <TableCell align="right">{item.email}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   )
 }
 

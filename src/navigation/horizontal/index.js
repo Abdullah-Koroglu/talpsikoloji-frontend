@@ -1,9 +1,11 @@
 const navigation = () => [
-  // {
-  //   title: 'Home',
-  //   path: '/home',
-  //   icon: 'mdi:home-outline',
-  // },
+  {
+    title: 'Kullanıcılar',
+    path: '/users',
+    subject: 'admin',
+    icon: 'mdi:home-outline',
+  },
+
   // {
   //   title: 'Second Page',
   //   path: '/second-page',
