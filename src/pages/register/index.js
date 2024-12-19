@@ -219,7 +219,8 @@ const Register = () => {
                   lineHeight: 1,
                   fontWeight: 600,
                   textTransform: 'uppercase',
-                  fontSize: '1.5rem !important'
+                  fontSize: '1.5rem !important',
+                  fontFamily: 'Segoe UI Symbol'
                 }}
               >
                 {themeConfig.templateName}

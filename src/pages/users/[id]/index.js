@@ -113,7 +113,7 @@ const UsersPage = () => {
         alignItems="center"
       >
         {data.tracks && <>
-          <DraggableList allTracks={tracks} setItems={setData} items={data.tracks} onDragEnd={onDragEnd} />
+          <DraggableList error={startedListeningAt === null} allTracks={tracks} setItems={setData} items={data.tracks} onDragEnd={onDragEnd} />
           <Box>
             <Button
               onClick={() => {
@@ -200,7 +200,7 @@ const UsersPage = () => {
         </>}
 
       </Box>
-      {data.childFullName && <MobileDatePicker defaultValue={dayjs(data.startedListeningAt)} value={startedListeningAt} onChange={newValue => setStartedListeningAt(newValue)} />}
+      {data.childFullName && <MobileDatePicker format="DD/MM/YYYY" defaultValue={dayjs(data.startedListeningAt)} value={startedListeningAt} onChange={newValue => setStartedListeningAt(newValue)} />}
     </Box>
   )
 }

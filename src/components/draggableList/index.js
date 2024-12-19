@@ -33,6 +33,7 @@ const DraggableList = React.memo(({ items, onDragEnd, allTracks, setItems }) => 
                         <Icon icon='mdi:headset' fontSize={20} />
                       </Avatar>
                     </ListItemAvatar>
+                    <p style={{ marginRight: 10, fontSize: "2rem" }}>{`${index + 1} - `}</p>
                     {item.id > 0 ? <ListItemText secondary={item.id} primary={item.track?.name} />
                       :
                       <Select

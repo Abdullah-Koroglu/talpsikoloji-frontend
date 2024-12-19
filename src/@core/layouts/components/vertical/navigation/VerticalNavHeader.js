@@ -79,7 +79,7 @@ const VerticalNavHeader = props => {
       ) : (
         <LinkStyled href='/'>
           <Image src='/images/logo.png' alt='logo' width={40} height={40} />
-          <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }) }}>
+          <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }), fontFamily: 'Segoe UI Symbol' }}>
             {themeConfig.templateName}
           </HeaderTitle>
         </LinkStyled>
